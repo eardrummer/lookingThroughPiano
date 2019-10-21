@@ -4,7 +4,7 @@
 void ofApp::setup(){
 
 	tod.load("tod.jpg");
-	todSize = ofVec2f(ofGetWidth()*0.6, ofGetHeight()*0.8);
+	todSize = ofVec2f(ofGetWidth(), ofGetHeight());
 
 	// print input ports to console
 	midiIn.listInPorts();
@@ -17,6 +17,7 @@ void ofApp::setup(){
 
 	// TODO: Load all assets and content
 
+	
 	string names[88] = { "0.10","0.11","0.12","1.1","1.2","1.3","1.4","1.5","1.6","1.7","1.8","1.9","1.10","1.11","1.12",
 		"2.1","2.2","2.3","2.4","2.5","2.6","2.7","2.8","2.9", "2.10","2.11","2.12",
 		"3.1","3.2","3.3","3.4","3.5","3.6","3.7","3.8","3.9", "3.10","3.11","3.12",
@@ -25,6 +26,8 @@ void ofApp::setup(){
 		"6.1","6.2","6.3","6.4","6.5","6.6","6.7","6.8","6.9", "6.10","6.11","6.12",
 		"7.1","7.2","7.3","7.4","7.5","7.6","7.7","7.8","7.9", "7.10","7.11","7.12",
 		"8.1"};
+
+	//string names[15] = { "0.10","0.11","0.12","1.1","1.2","1.3","1.4","1.5","1.6","1.7","1.8","1.9","1.10","1.11","1.12" };
 		
 
 	string noVideo[24] = { "0.10","1.11", "1.12", "3.6","4.1","4.2","4.3","4.5","4.10","4.11","5.1","5.3","5.5","6.2","6.3",
@@ -48,9 +51,33 @@ void ofApp::setup(){
 			contentObj c(names[i], 0);
 			allContent[names[i]] = c;
 		}
-		
 	}
-	
+
+	csvFile.load("Content_List.csv");
+
+	for (int i = 1; i < 89; i++) {
+		string id = csvFile.getRow(i).getString(0);
+
+		titles[id] = csvFile.getRow(i).getString(1);
+		dates[id] = csvFile.getRow(i).getString(2);
+		descriptions[id] = csvFile.getRow(i).getString(5);
+
+		for (int j = 0; j < descriptions[id].length(); j++) {
+			if (j % 100 == 0) {
+
+				for (int k = j; k > 0; k--) {
+					if (descriptions[id][k] == ' ') {
+						descriptions[id].insert(k+1, "\n");
+						break;
+					}
+				}
+				
+			}
+		}
+	}
+
+	font.load("Bebas-Regular.otf", 40);
+	fontDescription.load("Bebas-Regular.otf", 18);
 }
 
 //--------------------------------------------------------------
@@ -206,6 +233,18 @@ void ofApp::draw(){
 	for (int i = 0; i < contentArrayNames.size(); i++) {
 
 		allContent[contentArrayNames[i]].draw();
+
+		if (allContent[contentArrayNames[i]].mode == 0) {
+			// Solo mode
+			font.drawString(titles[contentArrayNames[i]], 50, 900);
+			font.drawString(dates[contentArrayNames[i]], 50, 950);
+			fontDescription.drawString(descriptions[contentArrayNames[i]], 50, 1000);
+		}
+		else if (allContent[contentArrayNames[i]].mode == 1) {
+			// Multiple mode
+			font.drawString(titles[contentArrayNames[i]], allContent[contentArrayNames[i]].textPos.x, allContent[contentArrayNames[i]].textPos.y);
+			font.drawString(dates[contentArrayNames[i]], allContent[contentArrayNames[i]].textPos.x, allContent[contentArrayNames[i]].textPos.y + 50);
+		}
 	}
 
 	// if they are in tiled mode

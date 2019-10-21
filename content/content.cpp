@@ -24,7 +24,6 @@ contentObj::contentObj(string name, int hasVideo = 1) {
 
 
 	this->mode = 0;
-	this->centerPos = ofVec2f(ofGetWidth()/2, ofGetHeight()/2);
 	this->alpha = 200;
 
 	this->image1State = 1;
@@ -187,10 +186,13 @@ void contentObj::update() {
 		image2Pos.x += 2;
 		image3Pos.x += 2;
 		videoPos.x += 2;
+		textPos.x += 2;
 
 		if (image1Pos.x > ofGetWidth() || image2Pos.x > ofGetWidth() || image3Pos.x > ofGetWidth()) {
 			videoPos.x = 0;
+			
 			image1Pos.x = 20;
+			textPos.x = image1Pos.x - 180;
 			image2Pos.x = 40;
 			image3Pos.x = 60;
 		}
@@ -227,7 +229,6 @@ void contentObj::rePosition(int numberOfAssets = 1, int indexOfAsset = 1) {
 				this->videoPos = ofVec2f(ofGetWidth() / 2, ofGetHeight() / 2);
 				this->videoSize = ofVec2f(ofGetWidth()*0.45, ofGetHeight()*0.45);
 			}
-			
 
 			this->image1Pos = ofVec2f(300, 300);
 			this->image1Size = ofVec2f(ofGetWidth()*0.25, ofGetHeight()*0.25);
@@ -248,10 +249,11 @@ void contentObj::rePosition(int numberOfAssets = 1, int indexOfAsset = 1) {
 					this->videoPos = ofVec2f(ofGetWidth() / 2 - 20, ofGetHeight() * 2 / 3);
 					this->videoSize = ofVec2f(ofGetWidth()*0.25, ofGetHeight()*0.25);
 				}
-			
 
 				this->image1Pos = ofVec2f(ofGetWidth() / 2 - 20 + 20, ofGetHeight() * 2 / 3 - 100);
 				this->image1Size = ofVec2f(ofGetWidth()*0.25, ofGetHeight()*0.25);
+
+				this->textPos = ofVec2f(image1Pos.x - 180, image1Pos.y + 300);
 
 				this->image2Pos = ofVec2f(ofGetWidth() / 2 - 20 + 40, ofGetHeight() * 2 / 3 - 200);
 				this->image2Size = ofVec2f(ofGetWidth()*0.25, ofGetHeight()*0.25);
@@ -271,6 +273,8 @@ void contentObj::rePosition(int numberOfAssets = 1, int indexOfAsset = 1) {
 				this->image1Pos = ofVec2f(350 + 20, ofGetHeight() * 2 / 3 - 100);
 				this->image1Size = ofVec2f(ofGetWidth()*0.25, ofGetHeight()*0.25);
 
+				this->textPos = ofVec2f(image1Pos.x - 180, image1Pos.y + 300);
+
 				this->image2Pos = ofVec2f(350 + 40, ofGetHeight() * 2 / 3 - 200);
 				this->image2Size = ofVec2f(ofGetWidth()*0.25, ofGetHeight()*0.25);
 
@@ -288,6 +292,8 @@ void contentObj::rePosition(int numberOfAssets = 1, int indexOfAsset = 1) {
 
 				this->image1Pos = ofVec2f(1500 + 20, ofGetHeight() * 2 / 3 - 100);
 				this->image1Size = ofVec2f(ofGetWidth()*0.25, ofGetHeight()*0.25);
+
+				this->textPos = ofVec2f(image1Pos.x - 180, image1Pos.y + 300);
 
 				this->image2Pos = ofVec2f(1500 + 40, ofGetHeight() * 2 / 3 - 200);
 				this->image2Size = ofVec2f(ofGetWidth()*0.25, ofGetHeight()*0.25);

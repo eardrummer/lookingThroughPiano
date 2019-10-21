@@ -4,7 +4,7 @@
 //========================================================================
 int main( ){
 
-	int Projector = 0;
+	int Projector = 1;
 
 	if (Projector) {
 		ofAppGLFWWindow window;

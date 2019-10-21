@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxMidi.h"
+#include "ofxCsv.h"
 #include "content.h"
 
 class ofApp : public ofBaseApp, public ofxMidiListener{
@@ -43,4 +44,9 @@ class ofApp : public ofBaseApp, public ofxMidiListener{
 		int previousCount = 0, currentCount = 0;
 		ofImage tod;
 		ofVec2f todSize;
+
+		std::map<string, string> dates, descriptions, titles;
+
+		ofxCsv csvFile;
+		ofTrueTypeFont font, fontDescription;
 };
